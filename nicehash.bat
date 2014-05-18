@@ -13,8 +13,7 @@ if "%ERRORLEVEL%"=="0" (
 	set nicehashs=true
 	set failovers=false
 	echo Price is good. Mining on Nicehash!
-	taskkill /F /FI "WINDOWTITLE eq nicehash_failover*" >NUL
-	taskkill /F /FI "WINDOWTITLE eq nicehash_failover*" >NUL
+	taskkill /F /T /FI "WINDOWTITLE eq nicehash_failover*" >NUL
 ) else (
 	set nicehashs=false
 	echo Nicehash checked. Price BTC/GH/Day is lower then we set...
