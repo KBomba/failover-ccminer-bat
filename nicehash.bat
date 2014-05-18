@@ -31,7 +31,7 @@ if "%ERRORLEVEL%"=="0" (
 	taskkill /F /T /FI "WINDOWTITLE eq nicehash_failover*" >NUL
 ) else (
 	set nicehashs=false
-	echo [%datetimef%] Nicehash checked. Price BTC/GH/Day is lower then we set.
+	echo [%datetimef%] Nicehash checked. Price BTC/GH/Day is lower than we set.
 )
 
 if "%nicehashs%"=="false" if "%failovers%"=="false" (
