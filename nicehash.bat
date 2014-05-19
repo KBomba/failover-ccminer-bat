@@ -23,19 +23,26 @@ if "%nicehashs%"=="false" (
 
 timeout 10 /NOBREAK >nul
 
-tasklist /FI "WINDOWTITLE eq nicehash_test*" 2>NUL | find /I /N "cmd.exe">NUL
+tasklist /FI "WINDOWTITLE eq nicehash_test*" 2>NUL | find /I /N "cmd.exe" >NUL
+if "%ERRORLEVEL%"=="1" (
+	set nicehashs=false
+	echo [%datetimef%] Nicehash checked. Price BTC/GH/Day is lower then we set.
+)
 if "%ERRORLEVEL%"=="0" (
 	set nicehashs=true
 	set failovers=false
 	echo [%datetimef%] Price is good. Mining on Nicehash!
 	taskkill /F /T /FI "WINDOWTITLE eq nicehash_failover*" >NUL
-) else (
-	set nicehashs=false
-	echo [%datetimef%] Nicehash checked. Price BTC/GH/Day is lower than we set.
 )
 
+
+tasklist /FI "WINDOWTITLE eq nicehash_failover*" 2>NUL |find /I /N "cmd.exe" >NUL
+if "%ERRORLEVEL%"=="1" set failovers=false
+if "%ERRORLEVEL%"=="0" set failovers=true
+
+
 if "%nicehashs%"=="false" if "%failovers%"=="false" (
-	start "nicehash_failover" nicehash_failover.bat
+	start "nicehash_failover" /MIN nicehash_failover.bat
 	set failovers=true
 )
 
